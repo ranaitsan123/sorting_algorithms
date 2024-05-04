@@ -1,11 +1,10 @@
 #include "sort.h"
 
 /**
- * quick_sort - Function that sorts an array based on
- * quick sort algorithm
- * @array: Array to be sorted
- * @size: Size of array
- * Return: 0
+ * quick_sort - sorts an array of integers in ascending order using
+ * the Quick sort algorithm
+ * @array: array to be sorted
+ * @size: size of the array
  */
 void quick_sort(int *array, size_t size)
 {
@@ -16,21 +15,16 @@ void quick_sort(int *array, size_t size)
 
 	print_sort(array, size, 1);
 
-	/* partition and get pivot index */
 	pivot = partition(array, size);
 
-	/* repeat for left of index */
 	quick_sort(array, pivot);
-	/* repeat for index and right */
 	quick_sort(array + pivot, size - pivot);
 }
 
 /**
- * swap - Function that swaps two values
- *
- * @a: Fisrt value
- * @b: Second value
- * Return: 0
+ * swap - swaps two integers
+ * @a: first integer
+ * @b: second integer
  */
 void swap(int *a, int *b)
 {
@@ -42,17 +36,15 @@ void swap(int *a, int *b)
 }
 
 /**
- * partition - Function that sets the pivot for quick_sort
- *
- * @array: Array to partition
- * @size: Size of array
- * Return: (i + 1)
+ * partition - partitions the array for quicksort
+ * @array: array to be partitioned
+ * @size: size of the array
+ * Return: index of the pivot element
  */
 size_t partition(int array[], size_t size)
 {
 	int pivot;
-	size_t i = -1;
-	size_t j;
+	size_t i = 0, j;
 
 	if (!array || size < 2)
 		return (0);
@@ -63,32 +55,31 @@ size_t partition(int array[], size_t size)
 	{
 		if (array[j] <= pivot)
 		{
-			i++;
 			if (i != j)
 			{
 				swap(&array[i], &array[j]);
 				print_sort(array, size, 0);
 			}
+			i++;
 		}
 	}
-	if (i + 1 != size - 1)
+	if (i != size - 1)
 	{
-		swap(&array[i + 1], &array[size - 1]);
+		swap(&array[i], &array[size - 1]);
 		print_sort(array, size, 0);
 	}
-	return (i + 1);
+	return (i);
 }
 
 /**
- * print_sort - Function that prints as it should
- * @array: Array to be printed
- * @size: Size of array
- * @init: Should initialize array
- * Return: 0
+ * print_sort - prints the array
+ * @array: array to be printed
+ * @size: size of the array
+ * @init: flag to initialize static variables
  */
 void print_sort(int array[], size_t size, int init)
 {
-	static int *p = (void *)0;
+	static int *p = NULL;
 	static size_t s;
 
 	if (!p && init)
